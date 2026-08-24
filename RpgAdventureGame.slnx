@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Backend/RpgAdventureGame.Backend.csproj" />
+  <Project Path="Database/RpgAdventureGame.Database.SQLite.csproj" />
+  <Project Path="Common/RpgAdventureGame.Common.csproj" />
+</Solution>
