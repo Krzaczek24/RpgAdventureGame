@@ -12,7 +12,7 @@ namespace RpgAdventureGame.Backend.Controllers.Commands.Area.Create
         public async ValueTask<CreateAreaCommandResult> Handle(CreateAreaCommand request)
         {
             if (await areaAccess.IsNameUsed(request.Name))
-                throw new ConflictException([ErrorCode.NotFound.AsFieldError(() => request.Name)]);
+                throw new ConflictException([ErrorCode.NonUnique.AsFieldError(() => request.Name)]);
 
             int id = await areaAccess.Create(new InsertAreaDto { Name = request.Name });
             return new CreateAreaCommandResult { Id = id };

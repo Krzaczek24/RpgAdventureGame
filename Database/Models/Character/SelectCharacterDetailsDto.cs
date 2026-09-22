@@ -1,11 +1,15 @@
-﻿using RpgAdventureGame.Database.SQLite.Models.Area;
-
-namespace RpgAdventureGame.Database.SQLite.Models.Character
+﻿namespace RpgAdventureGame.Database.SQLite.Models.Character
 {
     public class SelectCharacterDetailsDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public SelectAreaDetailsDto CurrentArea { get; set; }
+        public SelectCharacterDetailsAreaDetailsDto CurrentArea { get; set; }
+    }
+
+    public class SelectCharacterDetailsAreaDetailsDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

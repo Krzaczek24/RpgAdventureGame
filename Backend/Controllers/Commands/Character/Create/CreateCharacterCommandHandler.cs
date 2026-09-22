@@ -11,7 +11,7 @@ namespace RpgAdventureGame.Backend.Controllers.Commands.Character.Create
         public async ValueTask<CreateCharacterCommandResult> Handle(CreateCharacterCommand request)
         {
             if (await characterAccess.IsNameUsed(request.Name))
-                throw new ConflictException([ErrorCode.NotFound.AsFieldError(() => request.Name)]);
+                throw new ConflictException([ErrorCode.NonUnique.AsFieldError(() => request.Name)]);
 
             int id = await characterAccess.Create(new()
             {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RpgAdventureGame.Database.SQLite.Entities.Area;
 using RpgAdventureGame.Database.SQLite.Entities.Character;
+using RpgAdventureGame.Database.SQLite.Entities.Path;
 
 namespace RpgAdventureGame.Database.SQLite
 {
@@ -8,10 +9,11 @@ namespace RpgAdventureGame.Database.SQLite
     {
         internal virtual DbSet<DbArea> Areas { get; set; }
         internal virtual DbSet<DbCharacter> Characters { get; set; }
+        internal virtual DbSet<DbPath> Paths { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=X:\Game\RpgAdventureGame.SQLite.db");
+            optionsBuilder.UseSqlite(@"Data Source=E:\RpgAdventureGame\RpgAdventureGame.SQLite.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

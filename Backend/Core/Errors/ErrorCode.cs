@@ -45,6 +45,8 @@ namespace RpgAdventureGame.Backend.Core.Errors
         GreaterThanOtherField,
         [Description("Field '{0}' value cannot be greater than '{1}'.")]
         GreaterThan,
+        [Description("Field '{0}' value cannot be equal to '{1}' field value.")]
+        EqualToOtherField,
         [Description("Field '{0}' date cannot be from past.")]
         DateFromPast,
         // -----------------------

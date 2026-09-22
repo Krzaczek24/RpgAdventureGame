@@ -32,16 +32,15 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Character
         public async ValueTask<SelectCharacterDetailsDto?> Get(int id)
         {
             var query = from c in db.Characters
-                        join a in db.Areas on c.CurrentAreaId equals a.Id
                         where c.Id == id
                         select new SelectCharacterDetailsDto
                         {
                             Id = c.Id,
                             Name = c.Name,
-                            CurrentArea = new()
+                            CurrentArea = new SelectCharacterDetailsAreaDetailsDto
                             {
-                                Id = a.Id,
-                                Name = a.Name,
+                                Id = c.CurrentArea.Id,
+                                Name = c.CurrentArea.Name,
                             },
                         };
             return await query.FirstOrDefaultAsync();
