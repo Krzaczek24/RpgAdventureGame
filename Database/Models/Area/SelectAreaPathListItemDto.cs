@@ -7,11 +7,15 @@
         public decimal Distance { get; set; }
         public int DangerLevel { get; set; }
         public decimal DangerProbability { get; set; }
+
+        public override string ToString() => Name;
     }
 
     public class SelectAreaPathListItemAreaDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public override string ToString() => $"({Id}) {Name}";
     }
 }

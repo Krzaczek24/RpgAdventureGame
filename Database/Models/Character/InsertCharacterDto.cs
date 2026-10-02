@@ -4,5 +4,7 @@
     {
         public string Name { get; set; }
         public int CurrentAreaId { get; set; }
+
+        public override string ToString() => $"({CurrentAreaId}) {Name}";
     }
 }

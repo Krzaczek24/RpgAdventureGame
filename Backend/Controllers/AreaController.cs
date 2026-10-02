@@ -1,6 +1,5 @@
 ﻿using Krzaq.MediatR.Implementations;
 using Microsoft.AspNetCore.Mvc;
-using RpgAdventureGame.Backend.Controllers.Commands.Area.Create;
 using RpgAdventureGame.Backend.Controllers.Queries.Area.GetAvailablePaths;
 using RpgAdventureGame.Backend.Controllers.Queries.Area.GetCharacters;
 using RpgAdventureGame.Backend.Controllers.Queries.Area.List;
@@ -10,9 +9,6 @@ namespace RpgAdventureGame.Backend.Controllers
 {
     public class AreaController(IMediator mediator) : ApiController
     {
-        [HttpPost]
-        public ValueTask<CreateAreaCommandResult> Create([FromBody] CreateAreaCommand request) => mediator.Send(request);
-
         [HttpGet]
         public ValueTask<ListAreasQueryResult> GetList() => mediator.Send(new ListAreasQuery());
 

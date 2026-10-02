@@ -8,7 +8,6 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Area
     {
         ValueTask<bool> IsNameUsed(string name);
         ValueTask<bool> Exists(int id);
-        ValueTask<int> Create(InsertAreaDto insertParams);
         ValueTask<ReadOnlySet<SelectAreaListItemDto>> List();
         ValueTask<ReadOnlySet<SelectAreaCharacterListItemDto>> ListAreaCharacters(int areaId);
         ValueTask<ReadOnlySet<SelectAreaPathListItemDto>> ListAreaPaths(int areaId);
@@ -21,19 +20,6 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Area
 
         public async ValueTask<bool> Exists(int id)
             => await db.Areas.AnyAsync(a => a.Id == id);
-
-        public async ValueTask<int> Create(InsertAreaDto insertParams)
-        {
-            var area = new DbArea
-            {
-                Name = insertParams.Name,
-            };
-
-            await db.Areas.AddAsync(area);
-            await db.SaveChangesAsync();
-
-            return area.Id;
-        }
 
         public async ValueTask<ReadOnlySet<SelectAreaListItemDto>> List()
         {

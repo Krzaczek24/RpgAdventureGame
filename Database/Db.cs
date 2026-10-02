@@ -13,7 +13,11 @@ namespace RpgAdventureGame.Database.SQLite
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=E:\RpgAdventureGame\RpgAdventureGame.SQLite.db");
+            // Only configure default SQLite file when no other options were configured by the caller.
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlite(@"Data Source=E:\RpgAdventureGame\RpgAdventureGame.SQLite.db");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
