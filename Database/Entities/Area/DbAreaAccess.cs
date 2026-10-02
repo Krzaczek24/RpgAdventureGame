@@ -1,59 +1,40 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RpgAdventureGame.Database.SQLite.Models.Area;
-using System.Collections.ObjectModel;
+using RpgAdventureGame.Database.SQLite.Entities.Path;
 
 namespace RpgAdventureGame.Database.SQLite.Entities.Area
 {
     public interface IDbAreaAccess
     {
-        ValueTask<bool> IsNameUsed(string name);
-        ValueTask<bool> Exists(int id);
-        ValueTask<ReadOnlySet<SelectAreaListItemDto>> List();
-        ValueTask<ReadOnlySet<SelectAreaCharacterListItemDto>> ListAreaCharacters(int areaId);
-        ValueTask<ReadOnlySet<SelectAreaPathListItemDto>> ListAreaPaths(int areaId);
+        ValueTask<bool> Exists(int id, CancellationToken cancellationToken = default);
+        ValueTask<IReadOnlySet<DbArea>> List(CancellationToken cancellationToken = default);
+        ValueTask<IReadOnlySet<DbPath>> ListOutgoingPaths(int areaId, CancellationToken cancellationToken = default);
     }
 
     internal class DbAreaAccess(Db db) : IDbAreaAccess
     {
-        public async ValueTask<bool> IsNameUsed(string name)
-            => await db.Areas.AnyAsync(a => a.Name == name);
+        public async ValueTask<bool> Exists(int id, CancellationToken cancellationToken = default)
+            => await db.Areas.AnyAsync(a => a.Id == id, cancellationToken);
 
-        public async ValueTask<bool> Exists(int id)
-            => await db.Areas.AnyAsync(a => a.Id == id);
-
-        public async ValueTask<ReadOnlySet<SelectAreaListItemDto>> List()
+        public async ValueTask<IReadOnlySet<DbArea>> List(CancellationToken cancellationToken = default)
         {
             var query = from a in db.Areas
-                        select new SelectAreaListItemDto
+                        select new DbArea
                         {
                             Id = a.Id,
                             Name = a.Name,
                         };
-            var result = await query.ToHashSetAsync();
-            return result.AsReadOnly();
+
+            return (await query.ToHashSetAsync(cancellationToken)).AsReadOnly();
         }
 
-        public async ValueTask<ReadOnlySet<SelectAreaCharacterListItemDto>> ListAreaCharacters(int areaId)
-        {
-            var query = from c in db.Characters
-                        where c.CurrentAreaId == areaId
-                        select new SelectAreaCharacterListItemDto
-                        {
-                            Id = c.Id,
-                            Name = c.Name,
-                        };
-            var result = await query.ToHashSetAsync();
-            return result.AsReadOnly();
-        }
-
-        public async ValueTask<ReadOnlySet<SelectAreaPathListItemDto>> ListAreaPaths(int areaId)
+        public async ValueTask<IReadOnlySet<DbPath>> ListOutgoingPaths(int areaId, CancellationToken cancellationToken = default)
         {
             var query = from p in db.Paths
                         where p.StartAreaId == areaId
-                        select new SelectAreaPathListItemDto
+                        select new DbPath
                         {
                             Name = p.Name,
-                            EndArea = new SelectAreaPathListItemAreaDto
+                            EndArea = new DbArea
                             {
                                 Id = p.EndArea.Id,
                                 Name = p.EndArea.Name,
@@ -62,8 +43,8 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Area
                             DangerLevel = p.DangerLevel,
                             DangerProbability = p.DangerProbability,
                         };
-            var result = await query.ToHashSetAsync();
-            return result.AsReadOnly();
+
+            return (await query.ToHashSetAsync(cancellationToken)).AsReadOnly();
         }
     }
 }

@@ -15,12 +15,18 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Character
                 .IsRequired();
 
             builder.Property(x => x.CurrentAreaId)
-                .HasColumnName("CurrentAreaId")
-                .IsRequired();
+                .HasColumnName("CurrentAreaId");
+
+            builder.Property(x => x.CurrentPathId)
+                .HasColumnName("CurrentPathId");
 
             builder.HasOne(x => x.CurrentArea)
                 .WithMany(a => a.Characters)
                 .HasForeignKey(a => a.CurrentAreaId);
+
+            builder.HasOne(x => x.CurrentPath)
+                .WithMany(p => p.Characters)
+                .HasForeignKey(p => p.CurrentPathId);
         }
     }
 }

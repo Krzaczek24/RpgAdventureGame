@@ -1,9 +1,10 @@
 ﻿using RpgAdventureGame.Database.SQLite.Base;
 using RpgAdventureGame.Database.SQLite.Entities.Area;
+using RpgAdventureGame.Database.SQLite.Entities.Character;
 
 namespace RpgAdventureGame.Database.SQLite.Entities.Path
 {
-    internal class DbPath : DbTable
+    public class DbPath : DbTable
     {
         public virtual string Name { get; set; }
         public virtual int StartAreaId { get; set; }
@@ -13,5 +14,6 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Path
         public virtual decimal Distance { get; set; }
         public virtual int DangerLevel { get; set; }
         public virtual decimal DangerProbability { get; set; }
+        public virtual ICollection<DbCharacter> Characters { get; set; }
     }
 }

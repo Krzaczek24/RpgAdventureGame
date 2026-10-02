@@ -1,3 +1,4 @@
+using FluentValidation;
 using Krzaq.MediatR;
 using Krzaq.MediatR.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using RpgAdventureGame.Backend.Core.Errors;
 using RpgAdventureGame.Backend.Core.Middlewares;
 using RpgAdventureGame.Database.SQLite;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace RpgAdventureGame.Backend
 {
@@ -24,6 +26,8 @@ namespace RpgAdventureGame.Backend
 
         public static void Main(string[] args)
         {
+            ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Configuration.AddJsonFile("config.json", optional: false);
@@ -33,8 +37,12 @@ namespace RpgAdventureGame.Backend
 
             builder.Host.UseNLog();
 
-            builder.Services.AddControllers();
-            
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
+
             builder.Services.AddOpenApi(DOC_NAME);
 
             builder.Services.ConfigureHttpJsonOptions(opts =>

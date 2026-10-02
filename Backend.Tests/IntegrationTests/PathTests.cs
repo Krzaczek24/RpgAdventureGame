@@ -24,12 +24,12 @@ namespace RpgAdventureGame.Backend.Tests.IntegrationTests
                 "Gordium", "Finingham", "Calderas", "Calderas Glade", "Valderum Woods",
                 "Hunters Post", "At the Full Mug Tavern", "Traders' Encampment",
                 "Northern Outpost", "Faramh Wilderness", "Faramh"
-            }).SetName($"{nameof(CheckAvailablePathsAreaToArea)}_LongRoute");
+            }).SetName($"{nameof(TryTravelingFromAreaToAreaTest)}_LongRoute");
         }
 
         [Test]
         [TestCaseSource(nameof(TravelAreasCases))]
-        public async Task CheckAvailablePathsAreaToArea(IList<string> travelAreas)
+        public async Task TryTravelingFromAreaToAreaTest(IList<string> travelAreas)
         {
             // --- Arrange ---
             var availableAreas = (await Controller.GetList()).Areas;
@@ -48,8 +48,8 @@ namespace RpgAdventureGame.Backend.Tests.IntegrationTests
             // --- Act ---
             while (travelAreasIterator.MoveNext())
             {
-                var currentAreaAvailablePaths = (await Controller.GetAvailablePaths(currentArea.Id)).Paths;
-                var nextArea = currentAreaAvailablePaths.Select(x => x.EndArea).FirstOrDefault(x => x.Name == travelAreasIterator.Current);
+                var currentAreaAvailablePaths = (await Controller.GetAvailablePaths(currentArea.Id)).AvailablePaths;
+                var nextArea = currentAreaAvailablePaths.Select(x => x.TargetArea).FirstOrDefault(x => x.Name == travelAreasIterator.Current);
                 currentArea = availableAreas.FirstOrDefault(x => x.Id == (nextArea?.Id ?? default));
                 if (currentArea is null)
                     break;

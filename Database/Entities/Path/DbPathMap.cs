@@ -41,6 +41,10 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Path
             builder.Property(x => x.DangerProbability)
                 .HasColumnName("DangerProbability")
                 .IsRequired();
+
+            builder.HasMany(x => x.Characters)
+                .WithOne(c => c.CurrentPath)
+                .HasForeignKey(c => c.CurrentPathId);
         }
     }
 }

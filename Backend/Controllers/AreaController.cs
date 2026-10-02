@@ -1,9 +1,8 @@
 ﻿using Krzaq.MediatR.Implementations;
 using Microsoft.AspNetCore.Mvc;
-using RpgAdventureGame.Backend.Controllers.Queries.Area.GetAvailablePaths;
-using RpgAdventureGame.Backend.Controllers.Queries.Area.GetCharacters;
-using RpgAdventureGame.Backend.Controllers.Queries.Area.List;
 using RpgAdventureGame.Backend.Core.Controllers;
+using RpgAdventureGame.Backend.CQRS.Queries.Area.GetAvailablePaths;
+using RpgAdventureGame.Backend.CQRS.Queries.Area.List;
 
 namespace RpgAdventureGame.Backend.Controllers
 {
@@ -11,9 +10,6 @@ namespace RpgAdventureGame.Backend.Controllers
     {
         [HttpGet]
         public ValueTask<ListAreasQueryResult> GetList() => mediator.Send(new ListAreasQuery());
-
-        [HttpGet("{id}/characters")]
-        public ValueTask<GetAreaCharactersQueryResult> GetCharacters([FromRoute] int id) => mediator.Send(new GetAreaCharactersQuery() { AreaId = id });
 
         [HttpGet("{id}/available-paths")]
         public ValueTask<GetAreaAvailablePathsQueryResult> GetAvailablePaths([FromRoute] int id) => mediator.Send(new GetAreaAvailablePathsQuery() { AreaId = id });
