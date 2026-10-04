@@ -12,9 +12,8 @@ namespace RpgAdventureGame.Backend.CQRS.Commands.Character.Create
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
-                    .WithErrorCode(ErrorCode.MissingField)
-                .MustAsync(async (name, cancellation) => !await characterAccess.IsNameUsed(name, cancellation))
-                    .WithErrorCode(ErrorCode.NonUnique);
+                .MustAsync(async (name, ct) => !await characterAccess.IsCharacterNameUsedAsync(name, ct))
+                    .WithErrorCode(ErrorCode.NameAlreadyInUse);
         }
     }
 }

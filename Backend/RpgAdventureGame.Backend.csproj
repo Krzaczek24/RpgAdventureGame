@@ -11,16 +11,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Krzaq.Attributes.HttpStatus" Version="1.0.0" />
     <PackageReference Include="Krzaq.Attributes.ProducesResponse" Version="1.0.0" />
     <PackageReference Include="Krzaq.Exceptions.Http.Error" Version="1.0.2" />
-    <PackageReference Include="Krzaq.MediatR" Version="1.2.0" />
+    <PackageReference Include="Krzaq.MediatR" Version="1.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="6.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\KrzaqTools\MediatR\Krzaq.MediatR.csproj" />
     <ProjectReference Include="..\Database\RpgAdventureGame.Database.SQLite.csproj" />
   </ItemGroup>
 

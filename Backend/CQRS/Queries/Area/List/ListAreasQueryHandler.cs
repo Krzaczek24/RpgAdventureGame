@@ -6,9 +6,9 @@ namespace RpgAdventureGame.Backend.CQRS.Queries.Area.List
     public class ListAreasQueryHandler(IDbAreaAccess areaAccess)
         : IRequestHandler<ListAreasQuery, ListAreasQueryResult>
     {
-        public async ValueTask<ListAreasQueryResult> Handle(ListAreasQuery request)
+        public async ValueTask<ListAreasQueryResult> Handle(ListAreasQuery request, CancellationToken cancellationToken = default)
         {
-            var areas = await areaAccess.List();
+            var areas = await areaAccess.ListAreasAsync(cancellationToken);
 
             return new()
             {

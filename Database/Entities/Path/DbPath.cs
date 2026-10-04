@@ -14,6 +14,6 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Path
         public virtual decimal Distance { get; set; }
         public virtual int DangerLevel { get; set; }
         public virtual decimal DangerProbability { get; set; }
-        public virtual ICollection<DbCharacter> Characters { get; set; }
+        public virtual ICollection<DbCharacter> Characters { get; set; } = [];
     }
 }

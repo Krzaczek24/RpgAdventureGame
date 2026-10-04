@@ -27,6 +27,9 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Character
             builder.HasOne(x => x.CurrentPath)
                 .WithMany(p => p.Characters)
                 .HasForeignKey(p => p.CurrentPathId);
+
+            builder.HasOne(x => x.CurrentTravel)
+                .WithOne(t => t.Character);
         }
     }
 }

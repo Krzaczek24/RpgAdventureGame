@@ -10,6 +10,7 @@
     <PackageReference Include="Krzaq.Converters.EnumToString" Version="1.1.3" />
     <PackageReference Include="Krzaq.Errors.Model" Version="1.0.2" />
     <PackageReference Include="Krzaq.Extensions.Expression" Version="1.0.2" />
+    <PackageReference Include="Krzaq.Extensions.IEnumerable" Version="1.13.0" />
     <PackageReference Include="Krzaq.Extensions.String" Version="1.1.0" />
     <PackageReference Include="Krzaq.Tools.Reflection" Version="1.1.0" />
   </ItemGroup>

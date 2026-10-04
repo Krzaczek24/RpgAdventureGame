@@ -10,7 +10,7 @@ namespace RpgAdventureGame.Backend.Core.Extensions
         {
             return builder
                 .WithErrorCode(errorCode.ToString())
-                .WithMessage(string.Format(errorCode.GetDescription()!, ["{0}", .. @params]));
+                .WithMessage(string.Format(errorCode.GetDescription()!, [.. @params]));
         }
 
         public static IRuleBuilderOptions<T, TProperty> WithErrorCodeAndMessage<T, TProperty>(this IRuleBuilderOptions<T, TProperty> builder, ErrorCode errorCode, string message)

@@ -1,5 +1,4 @@
-﻿using Krzaq.Tools.Reflection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -36,7 +35,7 @@ namespace RpgAdventureGame.Database.SQLite
             return services;
         }
 
-        [GeneratedRegex("Access$")]
+        [GeneratedRegex("^Db.+Access$")]
         private static partial Regex DbAccessRegex();
 
         public static IReadOnlyCollection<Type> GetAllNonAbstractFromNamespace(string @namespace, string? suffixFilter = null, Assembly? assembly = null)

@@ -6,9 +6,9 @@ namespace RpgAdventureGame.Backend.CQRS.Queries.Area.GetAvailablePaths
     public class GetAreaAvailablePathsQueryHandler(IDbAreaAccess areaAccess)
         : IRequestHandler<GetAreaAvailablePathsQuery, GetAreaAvailablePathsQueryResult>
     {
-        public async ValueTask<GetAreaAvailablePathsQueryResult> Handle(GetAreaAvailablePathsQuery request)
+        public async ValueTask<GetAreaAvailablePathsQueryResult> Handle(GetAreaAvailablePathsQuery request, CancellationToken cancellationToken = default)
         {
-            var areaPaths = await areaAccess.ListOutgoingPaths(request.AreaId);
+            var areaPaths = await areaAccess.ListAreaOutgoingPathsAsync(request.AreaId, cancellationToken);
             return new()
             {
                 AvailablePaths = areaPaths.Select(path =>new AvailablePathDto

@@ -6,9 +6,9 @@ namespace RpgAdventureGame.Backend.CQRS.Queries.Character.Search
     public class SearchCharactersQueryHandler(IDbCharacterAccess characterAccess)
         : IRequestHandler<SearchCharactersQuery, SearchCharactersQueryResult>
     {
-        public async ValueTask<SearchCharactersQueryResult> Handle(SearchCharactersQuery request)
+        public async ValueTask<SearchCharactersQueryResult> Handle(SearchCharactersQuery request, CancellationToken cancellationToken = default)
         {
-            var areaCharacters = await characterAccess.Search(request);
+            var areaCharacters = await characterAccess.SearchCharactersAsync(request, cancellationToken);
             return new()
             {
                 Characters = areaCharacters.Select(character => new SearchCharacterDto

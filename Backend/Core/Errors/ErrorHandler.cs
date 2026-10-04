@@ -1,22 +1,36 @@
 ﻿using FluentValidation.Results;
-using Krzaq.Extensions.String.Notation;
+using Krzaq.Attributes.HttpStatus;
 using Krzaq.MediatR.Interfaces;
+using KrzaqTools.Extensions;
 using RpgAdventureGame.Backend.Core.Exceptions;
+using System.Net;
 
 namespace RpgAdventureGame.Backend.Core.Errors
 {
     public class ErrorHandler : IRequestErrorsHandler
     {
-        public Task<Exception> Handle(IReadOnlyCollection<ValidationFailure> errors)
+        public Task<Exception> Handle(IReadOnlyCollection<ValidationFailure> errors, CancellationToken cancellationToken = default)
         {
-            var exception = new BadRequestException(errors.Select(Convert));
-            return Task.FromResult<Exception>(exception);
+            var exceptionErrors = Convert(errors);
+            var httpStatus = exceptionErrors.Max(x => x.Code.GetAttribute<HttpStatusAttribute>()?.Code) ?? HttpStatusCode.InternalServerError;
+
+            Exception exception = httpStatus switch
+            {
+                HttpStatusCode.BadRequest => new BadRequestException(exceptionErrors),
+                HttpStatusCode.Unauthorized => new UnauthorizedException(),
+                HttpStatusCode.Forbidden => new ForbiddenException(),
+                HttpStatusCode.NotFound => new NotFoundException(exceptionErrors),
+                HttpStatusCode.Conflict => new ConflictException(exceptionErrors),
+                _ => new BadRequestException(exceptionErrors),
+            };
+
+            return Task.FromResult(exception);
         }
 
-        private static ErrorModel Convert(ValidationFailure e)
+        private static IEnumerable<ErrorModel> Convert(IReadOnlyCollection<ValidationFailure> errors)
         {
-            var errorCode = Enum.Parse<ErrorCode>(e.ErrorCode);
-            return new ErrorModel(errorCode, string.Format(e.ErrorMessage, e.PropertyName.ToCamelCase()));
+            foreach (var error in errors)
+                yield return new ErrorModel(Enum.Parse<ErrorCode>(error.ErrorCode), error.ErrorMessage);
         }
     }
 }

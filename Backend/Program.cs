@@ -2,10 +2,13 @@ using FluentValidation;
 using Krzaq.MediatR;
 using Krzaq.MediatR.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using RpgAdventureGame.Backend.Core.Converters;
 using RpgAdventureGame.Backend.Core.Errors;
 using RpgAdventureGame.Backend.Core.Middlewares;
+using RpgAdventureGame.Backend.Services;
 using RpgAdventureGame.Database.SQLite;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -27,6 +30,10 @@ namespace RpgAdventureGame.Backend
         public static void Main(string[] args)
         {
             ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
+            if (IS_DEBUG)
+            {
+                TravelService.Settings.SlidingExpiration = TimeSpan.FromSeconds(10);
+            }
 
             var builder = WebApplication.CreateBuilder(args);
 
@@ -37,11 +44,18 @@ namespace RpgAdventureGame.Backend
 
             builder.Host.UseNLog();
 
-            builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-            });
+            builder.Services
+                .AddControllers(options =>
+                {
+                    options.Conventions.Add(
+                        new RouteTokenTransformerConvention(
+                            new KebabCaseTransformer()));
+                })
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                });
 
             builder.Services.AddOpenApi(DOC_NAME);
 
@@ -51,12 +65,14 @@ namespace RpgAdventureGame.Backend
             });
 
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddMemoryCache();
 
             //builder.Services.Configure<DatabaseConfig>(builder.Configuration.GetSection("database:mikrus"));
 
             builder.Services.AddAppDatabase(IS_DEBUG ? new LoggerFactory([new NLogLoggerProvider()]) : null);
 
             builder.Services.AddMediator().AddHandlers().AddValidators().AddSingleton<IRequestErrorsHandler, ErrorHandler>();
+            builder.Services.AddScoped<ITravelService, TravelService>();
 
             builder.Services.Configure<ApiBehaviorOptions>(opts =>
             {

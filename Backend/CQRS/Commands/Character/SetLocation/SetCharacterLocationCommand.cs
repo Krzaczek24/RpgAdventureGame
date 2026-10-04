@@ -1,12 +1,14 @@
 ﻿using Krzaq.MediatR.Interfaces;
 using RpgAdventureGame.Common.Enums;
+using System.Text.Json.Serialization;
 
 namespace RpgAdventureGame.Backend.CQRS.Commands.Character.SetLocation
 {
     public class SetCharacterLocationCommand : IRequest
     {
-        public required int CharacterId { get; init; }
-        public required int LocationId { get; init; }
-        public required CharacterLocationType LocationType { get; init; }
+        [JsonIgnore]
+        public int CharacterId { get; init; }
+        public int LocationId { get; init; }
+        public CharacterLocationType LocationType { get; init; }
     }
 }

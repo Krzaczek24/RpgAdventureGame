@@ -5,17 +5,17 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Area
 {
     public interface IDbAreaAccess
     {
-        ValueTask<bool> Exists(int id, CancellationToken cancellationToken = default);
-        ValueTask<IReadOnlySet<DbArea>> List(CancellationToken cancellationToken = default);
-        ValueTask<IReadOnlySet<DbPath>> ListOutgoingPaths(int areaId, CancellationToken cancellationToken = default);
+        ValueTask<bool> AreaExistsAsync(int areaId, CancellationToken cancellationToken = default);
+        ValueTask<IReadOnlySet<DbArea>> ListAreasAsync(CancellationToken cancellationToken = default);
+        ValueTask<IReadOnlySet<DbPath>> ListAreaOutgoingPathsAsync(int areaId, CancellationToken cancellationToken = default);
     }
 
     internal class DbAreaAccess(Db db) : IDbAreaAccess
     {
-        public async ValueTask<bool> Exists(int id, CancellationToken cancellationToken = default)
-            => await db.Areas.AnyAsync(a => a.Id == id, cancellationToken);
+        public async ValueTask<bool> AreaExistsAsync(int areaId, CancellationToken cancellationToken = default)
+            => await db.Areas.AnyAsync(a => a.Id == areaId, cancellationToken);
 
-        public async ValueTask<IReadOnlySet<DbArea>> List(CancellationToken cancellationToken = default)
+        public async ValueTask<IReadOnlySet<DbArea>> ListAreasAsync(CancellationToken cancellationToken = default)
         {
             var query = from a in db.Areas
                         select new DbArea
@@ -27,12 +27,13 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Area
             return (await query.ToHashSetAsync(cancellationToken)).AsReadOnly();
         }
 
-        public async ValueTask<IReadOnlySet<DbPath>> ListOutgoingPaths(int areaId, CancellationToken cancellationToken = default)
+        public async ValueTask<IReadOnlySet<DbPath>> ListAreaOutgoingPathsAsync(int areaId, CancellationToken cancellationToken = default)
         {
             var query = from p in db.Paths
                         where p.StartAreaId == areaId
                         select new DbPath
                         {
+                            Id = p.Id,
                             Name = p.Name,
                             EndArea = new DbArea
                             {

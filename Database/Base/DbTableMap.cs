@@ -1,5 +1,4 @@
 ﻿using Krzaq.Extensions.String;
-using Krzaq.Extensions.String.Notation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,8 +10,8 @@ namespace RpgAdventureGame.Database.SQLite.Base
     {
         protected virtual string TableName { get; } = typeof(TDbTable).Name
             .TrimPrefix("Db", ignoreCase: true)
-            .TrimSuffix("Table", ignoreCase: true)
-            .ToSnakeCase();
+            .TrimSuffix("Table", ignoreCase: true);
+            //.ToSnakeCase();
 
         public virtual void Configure(EntityTypeBuilder<TDbTable> builder)
         {

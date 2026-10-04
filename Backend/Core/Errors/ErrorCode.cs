@@ -1,57 +1,70 @@
 ﻿using Krzaq.Attributes.EnumToString;
+using Krzaq.Attributes.HttpStatus;
 using System.ComponentModel;
+using System.Net;
 
 namespace RpgAdventureGame.Backend.Core.Errors
 {
     [EnumToString(NameAlterMode.ToUpperSnake)]
     public enum ErrorCode
     {
+        // +-------------+
+        // |   GENERAL   |
+        // +-------------+
+        [HttpStatus(HttpStatusCode.InternalServerError)]
         [Description("An unknown error occurred")]
         Unknown,
-        [Description("Bad request")]
-        BadRequest,
 
-        // --- authorization ---
+        // +-------------------+
+        // |   AUTHORIZATION   |
+        // +-------------------+
+        [HttpStatus(HttpStatusCode.Unauthorized)]
         [Description("Failed to authorize")]
         Unauthorized,
+        [HttpStatus(HttpStatusCode.Forbidden)]
         [Description("Forbidden")]
         Forbidden,
+        [HttpStatus(HttpStatusCode.Unauthorized)]
         [Description("Token expired")]
         TokenExpired,
+        [HttpStatus(HttpStatusCode.Unauthorized)]
         [Description("Invalid token")]
         InvalidToken,
+        [HttpStatus(HttpStatusCode.Conflict)]
         [Description("Token already exists")]
         TokenExists,
-        // ---------------------
 
-        // --- request fields ---
-        [Description("Field '{0}' is required.")]
-        MissingField,
-        [Description("Field '{0}' value is not unique.")]
-        NonUnique,
-        [Description("Field '{0}' value is the identifier of a non-existent resource.")]
-        NotFound,
-        [Description("Field '{0}' value is not valid SHA512 string.")]
-        InvalidSha512,
-        [Description("Field '{0}' value cannot be longer than '{1}' characters.")]
-        ValueTooLong,
-        [Description("Field '{0}' value cannot be non positive.")]
-        NonPositiveValue,
-        [Description("Field '{0}' value cannot be lesser than '{1}' field value.")]
-        LesserThanOtherField,
-        [Description("Field '{0}' value cannot be lesser than '{1}'.")]
-        LesserThan,
-        [Description("Field '{0}' value cannot be greater than '{1}' field value.")]
-        GreaterThanOtherField,
-        [Description("Field '{0}' value cannot be greater than '{1}'.")]
-        GreaterThan,
-        [Description("Field '{0}' value cannot be equal to '{1}' field value.")]
-        EqualToOtherField,
-        [Description("Field '{0}' date cannot be from past.")]
-        DateFromPast,
-        // -----------------------
+        // +----------------+
+        // |   GAME LOGIC   |
+        // +----------------+
 
-        
-        // -------------
+        // --- Character ---
+        [HttpStatus(HttpStatusCode.Conflict)]
+        [Description("Name is already in use")]
+        NameAlreadyInUse,
+        [HttpStatus(HttpStatusCode.NotFound)]
+        [Description("Character not found")]
+        CharacterNotFound,
+        [HttpStatus(HttpStatusCode.Conflict)]
+        [Description("Character is currently traveling")]
+        CharacterInTravel,
+        [HttpStatus(HttpStatusCode.Conflict)]
+        [Description("Character is outside any area")]
+        CharacterOutsideArea,
+
+        // --- Area ---
+        [HttpStatus(HttpStatusCode.NotFound)]
+        [Description("Area not found")]
+        AreaNotFound,
+
+        // --- Path ---
+        [HttpStatus(HttpStatusCode.NotFound)]
+        [Description("Path not found")]
+        PathNotFound,
+
+        // --- Travel ---
+        [HttpStatus(HttpStatusCode.Conflict)]
+        [Description("Invalid travel paths has been found: [{0}]")]
+        InvalidTravelPaths
     }
 }

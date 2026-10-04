@@ -32,7 +32,7 @@ namespace RpgAdventureGame.Backend.Tests.IntegrationTests
         public async Task TryTravelingFromAreaToAreaTest(IList<string> travelAreas)
         {
             // --- Arrange ---
-            var availableAreas = (await Controller.GetList()).Areas;
+            var availableAreas = (await Controller.GetList()).Value!.Areas;
 
             if (IsAnyAreaUnavailable(availableAreas.Select(a => a.Name), travelAreas, out string? unavailableArea))
             {
@@ -48,7 +48,7 @@ namespace RpgAdventureGame.Backend.Tests.IntegrationTests
             // --- Act ---
             while (travelAreasIterator.MoveNext())
             {
-                var currentAreaAvailablePaths = (await Controller.GetAvailablePaths(currentArea.Id)).AvailablePaths;
+                var currentAreaAvailablePaths = (await Controller.GetAvailablePaths(currentArea.Id)).Value!.AvailablePaths;
                 var nextArea = currentAreaAvailablePaths.Select(x => x.TargetArea).FirstOrDefault(x => x.Name == travelAreasIterator.Current);
                 currentArea = availableAreas.FirstOrDefault(x => x.Id == (nextArea?.Id ?? default));
                 if (currentArea is null)

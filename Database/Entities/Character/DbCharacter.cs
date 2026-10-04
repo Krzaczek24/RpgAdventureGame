@@ -1,6 +1,7 @@
 ﻿using RpgAdventureGame.Database.SQLite.Base;
 using RpgAdventureGame.Database.SQLite.Entities.Area;
 using RpgAdventureGame.Database.SQLite.Entities.Path;
+using RpgAdventureGame.Database.SQLite.Entities.Travel;
 
 namespace RpgAdventureGame.Database.SQLite.Entities.Character
 {
@@ -15,5 +16,6 @@ namespace RpgAdventureGame.Database.SQLite.Entities.Character
         public virtual int? CurrentPathId { get; set; }
         public virtual DbArea? CurrentArea { get; set; }
         public virtual DbPath? CurrentPath { get; set; }
+        public virtual DbTravel? CurrentTravel { get; set; }
     }
 }

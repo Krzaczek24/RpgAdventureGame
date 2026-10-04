@@ -1,4 +1,5 @@
 ﻿using Krzaq.MediatR.Interfaces;
+using RpgAdventureGame.Backend.Core.Errors;
 using RpgAdventureGame.Backend.Core.Exceptions;
 using RpgAdventureGame.Common.Enums;
 using RpgAdventureGame.Database.SQLite.Entities.Character;
@@ -8,10 +9,10 @@ namespace RpgAdventureGame.Backend.CQRS.Queries.Character.GetDetails
     public class GetCharacterDetailsQueryHandler(IDbCharacterAccess characterAccess)
         : IRequestHandler<GetCharacterDetailsQuery, GetCharacterDetailsQueryResult>
     {
-        public async ValueTask<GetCharacterDetailsQueryResult> Handle(GetCharacterDetailsQuery request)
+        public async ValueTask<GetCharacterDetailsQueryResult> Handle(GetCharacterDetailsQuery request, CancellationToken cancellationToken = default)
         {
-            var character = await characterAccess.Get(request.CharacterId)
-                ?? throw new NotFoundException();
+            var character = await characterAccess.GetCharacterAsync(request.CharacterId, cancellationToken)
+                ?? throw new NotFoundException(ErrorCode.CharacterNotFound);
 
             return new()
             {

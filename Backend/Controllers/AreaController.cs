@@ -9,9 +9,11 @@ namespace RpgAdventureGame.Backend.Controllers
     public class AreaController(IMediator mediator) : ApiController
     {
         [HttpGet]
-        public ValueTask<ListAreasQueryResult> GetList() => mediator.Send(new ListAreasQuery());
+        public async ValueTask<ActionResult<ListAreasQueryResult>> GetList()
+            => Ok(await mediator.Send(new ListAreasQuery()));
 
         [HttpGet("{id}/available-paths")]
-        public ValueTask<GetAreaAvailablePathsQueryResult> GetAvailablePaths([FromRoute] int id) => mediator.Send(new GetAreaAvailablePathsQuery() { AreaId = id });
+        public async ValueTask<ActionResult<GetAreaAvailablePathsQueryResult>> GetAvailablePaths([FromRoute] int id)
+            => Ok(await mediator.Send(new GetAreaAvailablePathsQuery() { AreaId = id }));
     }
 }
