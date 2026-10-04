@@ -2,7 +2,7 @@
 using RpgAdventureGame.Common.Enums;
 using System.Text.Json.Serialization;
 
-namespace RpgAdventureGame.WebApi.CQRS.Commands.Character.SetLocation
+namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.SetLocation
 {
     public class SetCharacterLocationCommand : IRequest
     {

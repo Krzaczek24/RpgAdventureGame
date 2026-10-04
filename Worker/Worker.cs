@@ -1,4 +1,4 @@
-namespace RpgAdventureGame.Worker
+namespace RpgAdventureGame.Backend.Worker
 {
     public class Worker(ILogger<Worker> logger) : BackgroundService
     {

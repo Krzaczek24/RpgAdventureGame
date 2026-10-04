@@ -1,9 +1,9 @@
-﻿using RpgAdventureGame.Database.SQLite.Base;
-using RpgAdventureGame.Database.SQLite.Entities.Area;
-using RpgAdventureGame.Database.SQLite.Entities.Path;
-using RpgAdventureGame.Database.SQLite.Entities.Travel;
+﻿using RpgAdventureGame.Backend.Database.SQLite.Base;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Area;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Path;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Travel;
 
-namespace RpgAdventureGame.Database.SQLite.Entities.Character
+namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Character
 {
     public class DbCharacter : DbTable
     {

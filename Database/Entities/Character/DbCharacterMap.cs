@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RpgAdventureGame.Database.SQLite.Base;
+using RpgAdventureGame.Backend.Database.SQLite.Base;
 
-namespace RpgAdventureGame.Database.SQLite.Entities.Character
+namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Character
 {
     internal class DbCharacterMap : DbTableMap<DbCharacter>
     {

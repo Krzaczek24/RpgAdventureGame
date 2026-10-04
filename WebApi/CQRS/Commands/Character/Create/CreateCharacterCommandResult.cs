@@ -1,4 +1,4 @@
-﻿namespace RpgAdventureGame.WebApi.CQRS.Commands.Character.Create
+﻿namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.Create
 {
     public class CreateCharacterCommandResult
     {

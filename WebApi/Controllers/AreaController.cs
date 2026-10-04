@@ -1,10 +1,10 @@
 ﻿using Krzaq.MediatR.Implementations;
 using Microsoft.AspNetCore.Mvc;
-using RpgAdventureGame.WebApi.Core.Controllers;
-using RpgAdventureGame.WebApi.CQRS.Queries.Area.GetAvailablePaths;
-using RpgAdventureGame.WebApi.CQRS.Queries.Area.List;
+using RpgAdventureGame.Backend.WebApi.Core.Controllers;
+using RpgAdventureGame.Backend.WebApi.CQRS.Queries.Area.GetAvailablePaths;
+using RpgAdventureGame.Backend.WebApi.CQRS.Queries.Area.List;
 
-namespace RpgAdventureGame.WebApi.Controllers
+namespace RpgAdventureGame.Backend.WebApi.Controllers
 {
     public class AreaController(IMediator mediator) : ApiController
     {

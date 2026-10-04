@@ -1,7 +1,7 @@
-﻿using RpgAdventureGame.WebApi.Controllers;
-using RpgAdventureGame.WebApi.Tests.IntegrationTests.Base;
+﻿using RpgAdventureGame.Backend.WebApi.Controllers;
+using RpgAdventureGame.Backend.WebApi.Tests.IntegrationTests.Base;
 
-namespace RpgAdventureGame.WebApi.Tests.IntegrationTests
+namespace RpgAdventureGame.Backend.WebApi.Tests.IntegrationTests
 {
     internal class PathTests : IntegrationTestBase
     {

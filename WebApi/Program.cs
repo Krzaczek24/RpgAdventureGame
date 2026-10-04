@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using RpgAdventureGame.Backend.WebApi.Core.Errors;
+using RpgAdventureGame.Backend.WebApi.Core.Middlewares;
+using RpgAdventureGame.Backend.WebApi.Services;
 using RpgAdventureGame.Database.SQLite;
 using RpgAdventureGame.WebApi.Core.Converters;
-using RpgAdventureGame.WebApi.Core.Errors;
-using RpgAdventureGame.WebApi.Core.Middlewares;
-using RpgAdventureGame.WebApi.Services;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace RpgAdventureGame.WebApi
+namespace RpgAdventureGame.Backend.WebApi
 {
     public class Program
     {

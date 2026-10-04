@@ -5,7 +5,7 @@ using KrzaqTools.Extensions;
 using RpgAdventureGame.WebApi.Core.Exceptions;
 using System.Net;
 
-namespace RpgAdventureGame.WebApi.Core.Errors
+namespace RpgAdventureGame.Backend.WebApi.Core.Errors
 {
     public class ErrorHandler : IRequestErrorsHandler
     {

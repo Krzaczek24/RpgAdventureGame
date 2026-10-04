@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace RpgAdventureGame.Database.SQLite.Base
+namespace RpgAdventureGame.Backend.Database.SQLite.Base
 {
     internal abstract class DbTableMap<TDbTable> : IEntityTypeConfiguration<TDbTable>
         where TDbTable : DbTable

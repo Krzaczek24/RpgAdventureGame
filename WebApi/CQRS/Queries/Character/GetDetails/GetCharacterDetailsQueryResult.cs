@@ -1,6 +1,6 @@
 ﻿using RpgAdventureGame.Common.Enums;
 
-namespace RpgAdventureGame.WebApi.CQRS.Queries.Character.GetDetails
+namespace RpgAdventureGame.Backend.WebApi.CQRS.Queries.Character.GetDetails
 {
     public class GetCharacterDetailsQueryResult
     {

@@ -1,7 +1,7 @@
 ﻿using Krzaq.Converters.EnumToString;
 using System.Text.Json.Serialization;
 
-namespace RpgAdventureGame.WebApi.Core.Errors
+namespace RpgAdventureGame.Backend.WebApi.Core.Errors
 {
     public class ErrorModel(ErrorCode code) : Krzaq.Errors.Model.ErrorModel<ErrorCode>(code)
     {

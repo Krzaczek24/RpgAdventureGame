@@ -1,12 +1,12 @@
 ﻿using Krzaq.MediatR.Interfaces;
-using RpgAdventureGame.Database.SQLite.Entities.Area;
-using RpgAdventureGame.Database.SQLite.Entities.Character;
-using RpgAdventureGame.Database.SQLite.Entities.Path;
-using RpgAdventureGame.Database.SQLite.Entities.Travel;
-using RpgAdventureGame.WebApi.Core.Errors;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Area;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Character;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Path;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Travel;
+using RpgAdventureGame.Backend.WebApi.Core.Errors;
 using RpgAdventureGame.WebApi.Core.Exceptions;
 
-namespace RpgAdventureGame.WebApi.CQRS.Commands.Character.StartTravel
+namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.StartTravel
 {
     public class CharacterStartTravelCommandHandler(
         IDbCharacterAccess characterAccess,

@@ -1,7 +1,7 @@
 ﻿using Krzaq.MediatR.Interfaces;
-using RpgAdventureGame.Database.SQLite.Entities.Area;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Area;
 
-namespace RpgAdventureGame.WebApi.CQRS.Queries.Area.List
+namespace RpgAdventureGame.Backend.WebApi.CQRS.Queries.Area.List
 {
     public class ListAreasQueryHandler(IDbAreaAccess areaAccess)
         : IRequestHandler<ListAreasQuery, ListAreasQueryResult>

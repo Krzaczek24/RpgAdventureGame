@@ -2,10 +2,10 @@
 using Krzaq.Exceptions.Http.Base;
 using Krzaq.Exceptions.Http.Error.Base;
 using NLog;
-using RpgAdventureGame.WebApi.Core.Errors;
+using RpgAdventureGame.Backend.WebApi.Core.Errors;
 using System.Text.Json;
 
-namespace RpgAdventureGame.WebApi.Core.Middlewares
+namespace RpgAdventureGame.Backend.WebApi.Core.Middlewares
 {
     public class ExceptionHandlingMiddleware(RequestDelegate next)
     {

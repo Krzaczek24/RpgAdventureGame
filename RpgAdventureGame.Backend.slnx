@@ -1,7 +1,7 @@
 <Solution>
-  <Project Path="Common/Common.csproj" />
-  <Project Path="Database/Database.SQLite.csproj" />
-  <Project Path="WebApi.Tests/WebApi.Tests.csproj" />
-  <Project Path="WebApi/WebApi.csproj" />
-  <Project Path="Worker/Worker.csproj" />
+  <Project Path="Common/RpgAdventureGame.Backend.Common.csproj" />
+  <Project Path="Database/RpgAdventureGame.Backend.Database.SQLite.csproj" />
+  <Project Path="WebApi.Tests/RpgAdventureGame.Backend.WebApi.Tests.csproj" />
+  <Project Path="WebApi/RpgAdventureGame.Backend.WebApi.csproj" />
+  <Project Path="Worker/RpgAdventureGame.Backend.Worker.csproj" />
 </Solution>

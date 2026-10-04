@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using KrzaqTools.Extensions;
-using RpgAdventureGame.WebApi.Core.Errors;
-using RpgAdventureGame.WebApi.Core.Extensions;
+using RpgAdventureGame.Backend.WebApi.Core.Errors;
+using RpgAdventureGame.Backend.WebApi.Core.Extensions;
 
-namespace RpgAdventureGame.WebApi.Core.Extensions
+namespace RpgAdventureGame.Backend.WebApi.Core.Extensions
 {
     public static class FluentValidationExtension
     {

@@ -1,7 +1,7 @@
 ﻿using Krzaq.MediatR.Interfaces;
-using RpgAdventureGame.Database.SQLite.Entities.Area;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Area;
 
-namespace RpgAdventureGame.WebApi.CQRS.Queries.Area.GetAvailablePaths
+namespace RpgAdventureGame.Backend.WebApi.CQRS.Queries.Area.GetAvailablePaths
 {
     public class GetAreaAvailablePathsQueryHandler(IDbAreaAccess areaAccess)
         : IRequestHandler<GetAreaAvailablePathsQuery, GetAreaAvailablePathsQueryResult>

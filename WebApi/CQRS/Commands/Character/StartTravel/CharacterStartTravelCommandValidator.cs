@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using Krzaq.MediatR.Implementations;
-using RpgAdventureGame.Database.SQLite.Entities.Character;
-using RpgAdventureGame.WebApi.Core.Errors;
-using RpgAdventureGame.WebApi.Core.Extensions;
-using RpgAdventureGame.WebApi.Services;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Character;
+using RpgAdventureGame.Backend.WebApi.Core.Errors;
+using RpgAdventureGame.Backend.WebApi.Core.Extensions;
+using RpgAdventureGame.Backend.WebApi.Services;
 
-namespace RpgAdventureGame.WebApi.CQRS.Commands.Character.StartTravel
+namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.StartTravel
 {
     public class CharacterStartTravelCommandValidator
         : RequestValidator<CharacterStartTravelCommand>

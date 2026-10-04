@@ -1,6 +1,6 @@
-﻿using RpgAdventureGame.WebApi.Core.Extensions;
+﻿using RpgAdventureGame.Backend.WebApi.Core.Extensions;
 
-namespace RpgAdventureGame.WebApi.Core.Middlewares
+namespace RpgAdventureGame.Backend.WebApi.Core.Middlewares
 {
     public class CopyingHeadersMiddleware(RequestDelegate next)
     {

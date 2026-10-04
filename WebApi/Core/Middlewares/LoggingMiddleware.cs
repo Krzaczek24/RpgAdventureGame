@@ -1,8 +1,8 @@
 ﻿using NLog;
-using RpgAdventureGame.WebApi.Core.Extensions;
+using RpgAdventureGame.Backend.WebApi.Core.Extensions;
 using System.Text;
 
-namespace RpgAdventureGame.WebApi.Core.Middlewares
+namespace RpgAdventureGame.Backend.WebApi.Core.Middlewares
 {
     public class LoggingMiddleware(RequestDelegate next)
     {

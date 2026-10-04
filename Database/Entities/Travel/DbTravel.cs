@@ -1,8 +1,8 @@
-﻿using RpgAdventureGame.Database.SQLite.Base;
-using RpgAdventureGame.Database.SQLite.Entities.Character;
-using RpgAdventureGame.Database.SQLite.Entities.TravelPath;
+﻿using RpgAdventureGame.Backend.Database.SQLite.Base;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Character;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.TravelPath;
 
-namespace RpgAdventureGame.Database.SQLite.Entities.Travel
+namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Travel
 {
     public class DbTravel : DbTable
     {

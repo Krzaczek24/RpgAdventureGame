@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
 using Krzaq.MediatR.Implementations;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Area;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Character;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Travel;
+using RpgAdventureGame.Backend.WebApi.Core.Errors;
+using RpgAdventureGame.Backend.WebApi.Core.Extensions;
 using RpgAdventureGame.Common.Enums;
-using RpgAdventureGame.Database.SQLite.Entities.Area;
-using RpgAdventureGame.Database.SQLite.Entities.Character;
-using RpgAdventureGame.Database.SQLite.Entities.Travel;
-using RpgAdventureGame.WebApi.Core.Errors;
-using RpgAdventureGame.WebApi.Core.Extensions;
 
-namespace RpgAdventureGame.WebApi.CQRS.Commands.Character.SetLocation
+namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.SetLocation
 {
     public class SetCharacterLocationCommandValidator
          : RequestValidator<SetCharacterLocationCommand>

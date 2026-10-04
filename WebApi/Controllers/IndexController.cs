@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RpgAdventureGame.WebApi.Core.Controllers;
+using RpgAdventureGame.Backend.WebApi.Core.Controllers;
 
-namespace RpgAdventureGame.WebApi.Controllers
+namespace RpgAdventureGame.Backend.WebApi.Controllers
 {
     [Route("index")]
     public class IndexController : ApiController

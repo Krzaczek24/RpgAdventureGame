@@ -1,7 +1,7 @@
 ﻿using Krzaq.MediatR.Interfaces;
-using RpgAdventureGame.Database.SQLite.Entities.Character;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Character;
 
-namespace RpgAdventureGame.WebApi.CQRS.Commands.Character.Create
+namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.Create
 {
     public class CreateCharacterCommandHandler(IDbCharacterAccess characterAccess)
         : IRequestHandler<CreateCharacterCommand, CreateCharacterCommandResult>

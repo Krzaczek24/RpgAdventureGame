@@ -1,4 +1,4 @@
-﻿namespace RpgAdventureGame.WebApi.CQRS.Queries.Area.List
+﻿namespace RpgAdventureGame.Backend.WebApi.CQRS.Queries.Area.List
 {
     public class ListAreasQueryResult()
     {

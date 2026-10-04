@@ -1,6 +1,6 @@
 ﻿using Krzaq.MediatR.Interfaces;
 
-namespace RpgAdventureGame.WebApi.CQRS.Commands.Character.StartTravel
+namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.StartTravel
 {
     public class CharacterStartTravelCommand : IRequest<CharacterStartTravelCommandResult>
     {

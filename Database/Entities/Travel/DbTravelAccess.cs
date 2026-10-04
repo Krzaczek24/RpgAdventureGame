@@ -1,8 +1,10 @@
 ﻿using Krzaq.Extensions.IEnumerable;
 using Microsoft.EntityFrameworkCore;
+using RpgAdventureGame.Backend.Database.SQLite;
+using RpgAdventureGame.Database.SQLite.Entities.Travel;
 using RpgAdventureGame.Database.SQLite.Entities.TravelPath;
 
-namespace RpgAdventureGame.Database.SQLite.Entities.Travel
+namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Travel
 {
     public interface IDbTravelAccess
     {

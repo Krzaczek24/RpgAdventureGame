@@ -1,14 +1,15 @@
 using Krzaq.MediatR.Implementations;
 using Microsoft.AspNetCore.Mvc;
+using RpgAdventureGame.Backend.WebApi.Core.Controllers;
+using RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.Create;
+using RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.StartTravel;
+using RpgAdventureGame.Backend.WebApi.CQRS.Queries.Character.GetDetails;
+using RpgAdventureGame.Backend.WebApi.CQRS.Queries.Character.Search;
 using RpgAdventureGame.Common.Enums;
-using RpgAdventureGame.WebApi.Core.Controllers;
-using RpgAdventureGame.WebApi.CQRS.Commands.Character.Create;
 using RpgAdventureGame.WebApi.CQRS.Commands.Character.SetLocation;
 using RpgAdventureGame.WebApi.CQRS.Commands.Character.StartTravel;
-using RpgAdventureGame.WebApi.CQRS.Queries.Character.GetDetails;
-using RpgAdventureGame.WebApi.CQRS.Queries.Character.Search;
 
-namespace RpgAdventureGame.WebApi.Controllers
+namespace RpgAdventureGame.Backend.WebApi.Controllers
 {
     public class CharacterController(IMediator mediator) : ApiController
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RpgAdventureGame.Database.SQLite.Base;
+using RpgAdventureGame.Backend.Database.SQLite.Base;
 
-namespace RpgAdventureGame.Database.SQLite.Entities.Area
+namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Area
 {
     internal class DbAreaMap : DbTableMap<DbArea>
     {

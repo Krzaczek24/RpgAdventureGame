@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RpgAdventureGame.Backend.Database.SQLite.Interfaces;
 using RpgAdventureGame.Database.SQLite.Entities.Area;
 using RpgAdventureGame.Database.SQLite.Entities.Path;
-using RpgAdventureGame.Database.SQLite.Interfaces;
 
-namespace RpgAdventureGame.Database.SQLite.Entities.Character
+namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Character
 {
     public interface IDbCharacterAccess
     {

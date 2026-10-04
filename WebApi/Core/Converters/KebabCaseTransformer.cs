@@ -1,6 +1,6 @@
 ﻿using Krzaq.Extensions.String.Notation;
 
-namespace RpgAdventureGame.WebApi.Core.Converters
+namespace RpgAdventureGame.Backend.WebApi.Core.Converters
 {
     public class KebabCaseTransformer : IOutboundParameterTransformer
     {

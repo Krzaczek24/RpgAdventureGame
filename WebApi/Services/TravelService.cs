@@ -1,8 +1,8 @@
 ﻿using Krzaq.Extensions.IEnumerable;
 using Microsoft.Extensions.Caching.Memory;
-using RpgAdventureGame.Database.SQLite.Entities.Travel;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Travel;
 
-namespace RpgAdventureGame.WebApi.Services
+namespace RpgAdventureGame.Backend.WebApi.Services
 {
     public interface ITravelService
     {
