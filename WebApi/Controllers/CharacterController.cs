@@ -1,10 +1,9 @@
 using Krzaq.MediatR.Implementations;
 using Microsoft.AspNetCore.Mvc;
-using RpgAdventureGame.Backend.CQRS.Commands.Character.SetLocation;
-using RpgAdventureGame.Backend.CQRS.Queries.Character.GetDetails;
 using RpgAdventureGame.Common.Enums;
 using RpgAdventureGame.WebApi.Core.Controllers;
 using RpgAdventureGame.WebApi.CQRS.Commands.Character.Create;
+using RpgAdventureGame.WebApi.CQRS.Commands.Character.SetLocation;
 using RpgAdventureGame.WebApi.CQRS.Commands.Character.StartTravel;
 using RpgAdventureGame.WebApi.CQRS.Queries.Character.GetDetails;
 using RpgAdventureGame.WebApi.CQRS.Queries.Character.Search;

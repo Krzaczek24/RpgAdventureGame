@@ -1,6 +1,5 @@
 ﻿using Krzaq.MediatR.Implementations;
 using Microsoft.AspNetCore.Mvc;
-using RpgAdventureGame.Backend.CQRS.Queries.Area.List;
 using RpgAdventureGame.WebApi.Core.Controllers;
 using RpgAdventureGame.WebApi.CQRS.Queries.Area.GetAvailablePaths;
 using RpgAdventureGame.WebApi.CQRS.Queries.Area.List;

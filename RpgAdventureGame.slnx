@@ -1,9 +1,0 @@
-<Solution>
-  <Folder Name="/Backend/">
-    <Project Path="Common/RpgAdventureGame.Common.csproj" />
-    <Project Path="Database/RpgAdventureGame.Database.SQLite.csproj" />
-    <Project Path="WebApi.Tests/RpgAdventureGame.WebApi.Tests.csproj" />
-    <Project Path="WebApi/RpgAdventureGame.WebApi.csproj" />
-    <Project Path="Worker/RpgAdventureGame.Worker.csproj" />
-  </Folder>
-</Solution>

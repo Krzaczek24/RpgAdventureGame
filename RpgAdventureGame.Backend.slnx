@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Common/Common.csproj" />
+  <Project Path="Database/Database.SQLite.csproj" />
+  <Project Path="WebApi.Tests/WebApi.Tests.csproj" />
+  <Project Path="WebApi/WebApi.csproj" />
+  <Project Path="Worker/Worker.csproj" />
+</Solution>

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Database\RpgAdventureGame.Database.SQLite.csproj" />
+    <ProjectReference Include="..\Database\Database.SQLite.csproj" />
   </ItemGroup>
 
   <ItemGroup>
