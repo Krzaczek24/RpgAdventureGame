@@ -1,5 +1,5 @@
 ﻿using Krzaq.MediatR.Interfaces;
-using RpgAdventureGame.Common.Enums;
+using RpgAdventureGame.Backend.Common.Enums;
 using System.Text.Json.Serialization;
 
 namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.SetLocation

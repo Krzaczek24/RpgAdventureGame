@@ -1,8 +1,8 @@
 ﻿using Krzaq.MediatR.Interfaces;
 using RpgAdventureGame.Backend.Database.SQLite.Entities.Character;
 using RpgAdventureGame.Backend.WebApi.Core.Errors;
-using RpgAdventureGame.Common.Enums;
-using RpgAdventureGame.WebApi.Core.Exceptions;
+using RpgAdventureGame.Backend.WebApi.Core.Exceptions;
+using RpgAdventureGame.Backend.Common.Enums;
 
 namespace RpgAdventureGame.Backend.WebApi.CQRS.Queries.Character.GetDetails
 {

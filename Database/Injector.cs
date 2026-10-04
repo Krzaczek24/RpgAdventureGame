@@ -27,7 +27,7 @@ namespace RpgAdventureGame.Database.SQLite
         public static IServiceCollection AddAppDbAccesses(this IServiceCollection services)
         {
             Type injectorType = typeof(Injector);
-            var accesses = GetAllNonAbstractFromNamespace(@$"{injectorType.Namespace}.{nameof(Entities)}", DbAccessRegex(), injectorType.Assembly);
+            var accesses = GetAllNonAbstractFromNamespace(@$"{injectorType.Namespace}.{nameof(Backend.Database.SQLite.Entities)}", DbAccessRegex(), injectorType.Assembly);
             foreach (Type access in accesses)
             {
                 Type @interface = access.GetInterface($"I{access.Name}");

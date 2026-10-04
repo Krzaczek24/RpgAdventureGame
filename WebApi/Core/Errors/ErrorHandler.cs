@@ -2,7 +2,7 @@
 using Krzaq.Attributes.HttpStatus;
 using Krzaq.MediatR.Interfaces;
 using KrzaqTools.Extensions;
-using RpgAdventureGame.WebApi.Core.Exceptions;
+using RpgAdventureGame.Backend.WebApi.Core.Exceptions;
 using System.Net;
 
 namespace RpgAdventureGame.Backend.WebApi.Core.Errors

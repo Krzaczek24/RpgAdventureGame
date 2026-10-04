@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Area;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.Path;
 using RpgAdventureGame.Backend.Database.SQLite.Interfaces;
-using RpgAdventureGame.Database.SQLite.Entities.Area;
-using RpgAdventureGame.Database.SQLite.Entities.Path;
 
 namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Character
 {

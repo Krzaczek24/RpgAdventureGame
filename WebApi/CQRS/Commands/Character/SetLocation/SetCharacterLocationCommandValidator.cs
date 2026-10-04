@@ -5,7 +5,7 @@ using RpgAdventureGame.Backend.Database.SQLite.Entities.Character;
 using RpgAdventureGame.Backend.Database.SQLite.Entities.Travel;
 using RpgAdventureGame.Backend.WebApi.Core.Errors;
 using RpgAdventureGame.Backend.WebApi.Core.Extensions;
-using RpgAdventureGame.Common.Enums;
+using RpgAdventureGame.Backend.Common.Enums;
 
 namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.SetLocation
 {
