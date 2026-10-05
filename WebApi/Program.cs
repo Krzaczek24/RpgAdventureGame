@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using RpgAdventureGame.Backend.Common;
 using RpgAdventureGame.Backend.WebApi.Core.Converters;
 using RpgAdventureGame.Backend.WebApi.Core.Errors;
 using RpgAdventureGame.Backend.WebApi.Core.Middlewares;
@@ -21,16 +22,10 @@ namespace RpgAdventureGame.Backend.WebApi
         private const string DOC_NAME = "swagger";
         public const string ENDPOINT = $"{OPENAPI_PREFIX}/{DOC_NAME}.json";
 
-#if DEBUG
-        public const bool IS_DEBUG = true;
-#else
-        public const bool IS_DEBUG = false;
-#endif
-
         public static void Main(string[] args)
         {
             ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
-            if (IS_DEBUG)
+            if (EnvInfo.IsDebug)
             {
                 TravelService.Settings.SlidingExpiration = TimeSpan.FromSeconds(10);
             }
@@ -69,7 +64,7 @@ namespace RpgAdventureGame.Backend.WebApi
 
             //builder.Services.Configure<DatabaseConfig>(builder.Configuration.GetSection("database:mikrus"));
 
-            builder.Services.AddAppDatabase(IS_DEBUG ? new LoggerFactory([new NLogLoggerProvider()]) : null);
+            builder.Services.AddAppDatabase(EnvInfo.IsDebug ? new LoggerFactory([new NLogLoggerProvider()]) : null);
 
             builder.Services.AddMediator().AddHandlers().AddValidators().AddSingleton<IRequestErrorsHandler, ErrorHandler>();
             builder.Services.AddScoped<ITravelService, TravelService>();
@@ -84,7 +79,7 @@ namespace RpgAdventureGame.Backend.WebApi
 
             app.MapOpenApi();
 
-            if (app.Environment.IsDevelopment())
+            if (EnvInfo.IsDebug)
             {
                 app.UseSwaggerUI(x => x.SwaggerEndpoint(ENDPOINT, nameof(RpgAdventureGame)));
             }

@@ -7,28 +7,28 @@ namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Character
 {
     public interface IDbCharacterAccess
     {
-        ValueTask<bool> CharacterExistsAsync(int characterId, CancellationToken cancellationToken = default);
-        ValueTask<bool> IsCharacterNameUsedAsync(string characterName, CancellationToken cancellationToken = default);
-        ValueTask<bool> IsCharacterTravelingAsync(int characterId, CancellationToken cancellationToken = default);
-        ValueTask<int> CreateCharacterAsync(string characterName, CancellationToken cancellationToken = default);
-        ValueTask<DbCharacter?> GetCharacterAsync(int characterId, CancellationToken cancellationToken = default);
-        ValueTask<IReadOnlySet<DbCharacter>> SearchCharactersAsync(ISearchCharacterParams searchParams, CancellationToken cancellationToken = default);
-        ValueTask SetCharacterCurrentAreaAsync(int characterId, int areaId, CancellationToken cancellationToken = default);
-        ValueTask SetCharacterCurrentPathAsync(int characterId, int pathId, CancellationToken cancellationToken = default);
+        Task<bool> CharacterExistsAsync(int characterId, CancellationToken cancellationToken = default);
+        Task<bool> IsCharacterNameUsedAsync(string characterName, CancellationToken cancellationToken = default);
+        Task<bool> IsCharacterTravelingAsync(int characterId, CancellationToken cancellationToken = default);
+        Task<int> CreateCharacterAsync(string characterName, CancellationToken cancellationToken = default);
+        Task<DbCharacter?> GetCharacterAsync(int characterId, CancellationToken cancellationToken = default);
+        Task<IReadOnlySet<DbCharacter>> SearchCharactersAsync(ISearchCharacterParams searchParams, CancellationToken cancellationToken = default);
+        Task SetCharacterCurrentAreaAsync(int characterId, int areaId, CancellationToken cancellationToken = default);
+        Task SetCharacterCurrentPathAsync(int characterId, int pathId, CancellationToken cancellationToken = default);
     }
 
     internal class DbCharacterAccess(Db db) : IDbCharacterAccess
     {
-        public async ValueTask<bool> CharacterExistsAsync(int characterId, CancellationToken cancellationToken = default)
-            => await db.Characters.AnyAsync(c => c.Id == characterId, cancellationToken);
+        public Task<bool> CharacterExistsAsync(int characterId, CancellationToken cancellationToken = default)
+            => db.Characters.AnyAsync(c => c.Id == characterId, cancellationToken);
 
-        public async ValueTask<bool> IsCharacterNameUsedAsync(string characterName, CancellationToken cancellationToken = default)
-            => await db.Characters.AnyAsync(c => EF.Functions.Like(c.Name, characterName), cancellationToken);
+        public Task<bool> IsCharacterNameUsedAsync(string characterName, CancellationToken cancellationToken = default)
+            => db.Characters.AnyAsync(c => EF.Functions.Like(c.Name, characterName), cancellationToken);
 
-        public async ValueTask<bool> IsCharacterTravelingAsync(int characterId, CancellationToken cancellationToken = default)
-            => await db.Characters.AnyAsync(c => c.Id == characterId && (c.CurrentTravel != null || c.CurrentTravel.Completed), cancellationToken);
+        public Task<bool> IsCharacterTravelingAsync(int characterId, CancellationToken cancellationToken = default)
+            => db.Characters.AnyAsync(c => c.Id == characterId && (c.CurrentTravel != null || c.CurrentTravel.Completed), cancellationToken);
 
-        public async ValueTask<int> CreateCharacterAsync(string characterName, CancellationToken cancellationToken = default)
+        public async Task<int> CreateCharacterAsync(string characterName, CancellationToken cancellationToken = default)
         {
             var character = new DbCharacter { Name = characterName };
 
@@ -38,7 +38,7 @@ namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Character
             return character.Id;
         }
 
-        public async ValueTask<DbCharacter?> GetCharacterAsync(int characterId, CancellationToken cancellationToken = default)
+        public Task<DbCharacter?> GetCharacterAsync(int characterId, CancellationToken cancellationToken = default)
         {
             var query = from c in db.Characters
                         where c.Id == characterId
@@ -58,10 +58,10 @@ namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Character
                             },
                         };
 
-            return await query.FirstOrDefaultAsync(cancellationToken);
+            return query.FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async ValueTask<IReadOnlySet<DbCharacter>> SearchCharactersAsync(ISearchCharacterParams searchParams, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlySet<DbCharacter>> SearchCharactersAsync(ISearchCharacterParams searchParams, CancellationToken cancellationToken = default)
         {
             var query = from c in db.Characters
                         where (EF.Functions.Like(c.Name, $"%{searchParams.Name}%"))
@@ -88,13 +88,13 @@ namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Character
             return (await query.ToHashSetAsync(cancellationToken)).AsReadOnly();
         }
 
-        public async ValueTask SetCharacterCurrentAreaAsync(int characterId, int areaId, CancellationToken cancellationToken = default)
-            => await SetCurrentLocation(characterId, areaId, null, cancellationToken);
+        public Task SetCharacterCurrentAreaAsync(int characterId, int areaId, CancellationToken cancellationToken = default)
+            => SetCurrentLocation(characterId, areaId, null, cancellationToken);
 
-        public async ValueTask SetCharacterCurrentPathAsync(int characterId, int pathId, CancellationToken cancellationToken = default)
-            => await SetCurrentLocation(characterId, null, pathId, cancellationToken);
+        public Task SetCharacterCurrentPathAsync(int characterId, int pathId, CancellationToken cancellationToken = default)
+            => SetCurrentLocation(characterId, null, pathId, cancellationToken);
 
-        private async ValueTask SetCurrentLocation(int characterId, int? areaId, int? pathId, CancellationToken cancellationToken = default)
+        private async Task SetCurrentLocation(int characterId, int? areaId, int? pathId, CancellationToken cancellationToken = default)
         {
             int affectedRows = await db.Characters
                 .Where(c => c.Id == characterId)

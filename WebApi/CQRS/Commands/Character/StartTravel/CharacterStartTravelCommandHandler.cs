@@ -32,7 +32,7 @@ namespace RpgAdventureGame.Backend.WebApi.CQRS.Commands.Character.StartTravel
 
             return new() { Id = id };
 
-            ValueTask<IReadOnlySet<DbPath>> GetAvailablePaths() => areaAccess.ListAreaOutgoingPathsAsync(currentArea.Id, cancellationToken);
+            Task<IReadOnlySet<DbPath>> GetAvailablePaths() => areaAccess.ListAreaOutgoingPathsAsync(currentArea.Id, cancellationToken);
         }
     }
 }

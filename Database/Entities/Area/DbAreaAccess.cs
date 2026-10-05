@@ -1,22 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RpgAdventureGame.Backend.Database.SQLite;
 using RpgAdventureGame.Backend.Database.SQLite.Entities.Path;
 
 namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Area
 {
     public interface IDbAreaAccess
     {
-        ValueTask<bool> AreaExistsAsync(int areaId, CancellationToken cancellationToken = default);
-        ValueTask<IReadOnlySet<DbArea>> ListAreasAsync(CancellationToken cancellationToken = default);
-        ValueTask<IReadOnlySet<DbPath>> ListAreaOutgoingPathsAsync(int areaId, CancellationToken cancellationToken = default);
+        Task<bool> AreaExistsAsync(int areaId, CancellationToken cancellationToken = default);
+        Task<IReadOnlySet<DbArea>> ListAreasAsync(CancellationToken cancellationToken = default);
+        Task<IReadOnlySet<DbPath>> ListAreaOutgoingPathsAsync(int areaId, CancellationToken cancellationToken = default);
     }
 
     internal class DbAreaAccess(Db db) : IDbAreaAccess
     {
-        public async ValueTask<bool> AreaExistsAsync(int areaId, CancellationToken cancellationToken = default)
+        public async Task<bool> AreaExistsAsync(int areaId, CancellationToken cancellationToken = default)
             => await db.Areas.AnyAsync(a => a.Id == areaId, cancellationToken);
 
-        public async ValueTask<IReadOnlySet<DbArea>> ListAreasAsync(CancellationToken cancellationToken = default)
+        public async Task<IReadOnlySet<DbArea>> ListAreasAsync(CancellationToken cancellationToken = default)
         {
             var query = from a in db.Areas
                         select new DbArea
@@ -28,7 +27,7 @@ namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Area
             return (await query.ToHashSetAsync(cancellationToken)).AsReadOnly();
         }
 
-        public async ValueTask<IReadOnlySet<DbPath>> ListAreaOutgoingPathsAsync(int areaId, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlySet<DbPath>> ListAreaOutgoingPathsAsync(int areaId, CancellationToken cancellationToken = default)
         {
             var query = from p in db.Paths
                         where p.StartAreaId == areaId

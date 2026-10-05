@@ -6,17 +6,17 @@ namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Travel
 {
     public interface IDbTravelAccess
     {
-        ValueTask<bool> PathExistsAsync(int pathId, CancellationToken cancellationToken = default);
-        ValueTask<IReadOnlyDictionary<(int, int), bool>> AreTravelPathsValidAsync(IList<int> pathIds, CancellationToken cancellationToken = default);
-        ValueTask<int> RegisterTravelAsync(int characterId, IList<int> pathIds, CancellationToken cancellationToken = default);
+        Task<bool> PathExistsAsync(int pathId, CancellationToken cancellationToken = default);
+        Task<IReadOnlyDictionary<(int, int), bool>> AreTravelPathsValidAsync(IList<int> pathIds, CancellationToken cancellationToken = default);
+        Task<int> RegisterTravelAsync(int characterId, IList<int> pathIds, CancellationToken cancellationToken = default);
     }
 
     internal class DbTravelAccess(Db db) : IDbTravelAccess
     {
-        public async ValueTask<bool> PathExistsAsync(int pathId, CancellationToken cancellationToken = default)
-            => await db.Paths.AnyAsync(p => p.Id == pathId, cancellationToken);
+        public Task<bool> PathExistsAsync(int pathId, CancellationToken cancellationToken = default)
+            => db.Paths.AnyAsync(p => p.Id == pathId, cancellationToken);
 
-        public async ValueTask<IReadOnlyDictionary<(int, int), bool>> AreTravelPathsValidAsync(IList<int> pathIds, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyDictionary<(int, int), bool>> AreTravelPathsValidAsync(IList<int> pathIds, CancellationToken cancellationToken = default)
         {
             var query = from p1 in db.Paths
                         join p2 in db.Paths on p1.EndAreaId equals p2.StartAreaId
@@ -32,7 +32,7 @@ namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Travel
                 .ToReadOnlyDictionary(x => x, validPairs.Contains);
         }
 
-        public async ValueTask<int> RegisterTravelAsync(int characterId, IList<int> pathIds, CancellationToken cancellationToken = default)
+        public async Task<int> RegisterTravelAsync(int characterId, IList<int> pathIds, CancellationToken cancellationToken = default)
         {
             var travel = new DbTravel
             {
