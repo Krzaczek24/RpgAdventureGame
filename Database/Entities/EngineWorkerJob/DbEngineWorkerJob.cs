@@ -1,8 +1,8 @@
 ﻿using RpgAdventureGame.Backend.Database.SQLite.Base;
 
-namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Worker
+namespace RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob
 {
-    public class DbWorker : DbTable
+    public class DbEngineWorkerJob : DbTable
     {
         public string Name { get; set; }
         public bool Active { get; set; }

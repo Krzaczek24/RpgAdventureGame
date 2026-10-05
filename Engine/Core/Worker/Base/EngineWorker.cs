@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RpgAdventureGame.Backend.Common;
-using RpgAdventureGame.Backend.Database.SQLite.Entities.Worker;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob;
 using RpgAdventureGame.Backend.Engine.Core.Worker.Interfaces;
 
 namespace RpgAdventureGame.Backend.Engine.Core.Worker.Base
@@ -13,29 +13,28 @@ namespace RpgAdventureGame.Backend.Engine.Core.Worker.Base
         IServiceScopeFactory scopeFactory) : BackgroundService
         where TJob : IJob
     {
-        protected Type WorkerType { get; } = typeof(TJob);
+        protected static string JobName { get; } = typeof(TJob).Name;
 
         protected ILogger Logger { get; } = logger;
         protected IMemoryCache Cache { get; } = cache;
 
         protected sealed override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Logger.Info("Worker starting ...");
+            Logger.Info("Worker is preparing to start job ...");
 
-            DbWorker config;
+            DbEngineWorkerJob config;
 
             await using (var scope = scopeFactory.CreateAsyncScope())
             {
                 var access = scope.ServiceProvider.GetRequiredService<IDbWorkerAccess>();
 
                 config = await LoadConfigAsync(scope, stoppingToken)
-                    ?? throw new InvalidOperationException($"Worker '{WorkerType.Name}' configuration not found");
-
-                Logger.Info("Worker configuration loaded");
+                    ?? throw new InvalidOperationException($"Worker's job '{JobName}' configuration has been not found");
             }
 
             try
             {
+                Logger.Info("Worker is starting job ...");
                 await RunAsync(config, scopeFactory, stoppingToken);
             }
             catch (OperationCanceledException ex)
@@ -44,19 +43,22 @@ namespace RpgAdventureGame.Backend.Engine.Core.Worker.Base
             }
         }
 
-        protected abstract Task RunAsync(DbWorker config, IServiceScopeFactory scopeFactory, CancellationToken stoppingToken);
+        protected abstract Task RunAsync(DbEngineWorkerJob config, IServiceScopeFactory scopeFactory, CancellationToken stoppingToken);
 
-        protected Task<DbWorker> LoadConfigAsync(AsyncServiceScope scope, CancellationToken stoppingToken)
+        protected Task<DbEngineWorkerJob> LoadConfigAsync(AsyncServiceScope scope, CancellationToken stoppingToken)
         {
-            var config = Cache.GetOrCreateAsync($"{WorkerType.Name}_WORKER_CONFIG", opts =>
+            var job = Cache.GetOrCreateAsync($"{JobName}_JOB_CONFIG", opts =>
             {
                 opts.AbsoluteExpirationRelativeToNow = EnvInfo.IsDebug ? TimeSpan.FromSeconds(10) : TimeSpan.FromMinutes(10);
 
+                Logger.Info("Loading job configuration from database ...");
+
                 var access = scope.ServiceProvider.GetRequiredService<IDbWorkerAccess>();
-                return access.GetWorkerAsync(WorkerType.Name, stoppingToken)!;
+                return access.GetJobAsync(JobName, stoppingToken)!;
             });
 
-            return config!;
+            Logger.Info("Job configuration loaded");
+            return job!;
         }
     }
 }

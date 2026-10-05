@@ -1,16 +1,20 @@
-﻿namespace RpgAdventureGame.Backend.Engine.Core
+﻿using RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob;
+
+namespace RpgAdventureGame.Backend.Engine.Core
 {
     public interface IJobContext
     {
         string JobName { get; }
-        Guid InstanceId { get; }
-        bool DidSomeJob { get; set; }
+        string InstanceId { get; }
+        bool DoNextJob { get; set; }
+        WorkerType WorkerType { get; }
     }
 
     internal class JobContext : IJobContext
     {
         public required string JobName { get; init; }
-        public required Guid InstanceId { get; init; }
-        public bool DidSomeJob { get; set; }
+        public required string InstanceId { get; init; }
+        public bool DoNextJob { get; set; }
+        public required WorkerType WorkerType { get; init; }
     }
 }

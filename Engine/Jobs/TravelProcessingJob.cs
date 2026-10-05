@@ -1,10 +1,11 @@
-﻿using RpgAdventureGame.Backend.Engine.Core.Worker.Interfaces;
+﻿using RpgAdventureGame.Backend.Engine.Core;
+using RpgAdventureGame.Backend.Engine.Core.Worker.Interfaces;
 
-namespace RpgAdventureGame.Backend.Engine.Workers
+namespace RpgAdventureGame.Backend.Engine.Jobs
 {
     internal class TravelProcessingJob : IJob
     {
-        public Task ExecuteAsync(CancellationToken stoppingToken)
+        public Task ExecuteAsync(IJobContext context, CancellationToken stoppingToken)
         {
             throw new NotImplementedException();
         }

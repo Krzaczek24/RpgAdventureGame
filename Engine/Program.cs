@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using RpgAdventureGame.Backend.Common;
 using RpgAdventureGame.Backend.Engine.Core.Worker.Implementations;
-using RpgAdventureGame.Backend.Engine.Workers;
+using RpgAdventureGame.Backend.Engine.Jobs;
 using RpgAdventureGame.Database.SQLite;
 
 namespace RpgAdventureGame.Backend.Engine
@@ -18,7 +18,6 @@ namespace RpgAdventureGame.Backend.Engine
             builder.Logging.AddNLog();
 
             builder.Services.AddAppDatabase(EnvInfo.IsDebug ? new LoggerFactory([new NLogLoggerProvider()]) : null);
-
             builder.Services.AddHostedService<ContinuousWorker<TravelProcessingJob>>();
 
             var app = builder.Build();

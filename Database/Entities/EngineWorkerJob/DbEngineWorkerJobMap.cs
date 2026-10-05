@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RpgAdventureGame.Backend.Database.SQLite.Base;
 
-namespace RpgAdventureGame.Backend.Database.SQLite.Entities.Worker
+namespace RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob
 {
-    internal class DbWorkerMap : DbTableMap<DbWorker>
+    internal class DbEngineWorkerJobMap : DbTableMap<DbEngineWorkerJob>
     {
-        public override void Configure(EntityTypeBuilder<DbWorker> builder)
+        public override void Configure(EntityTypeBuilder<DbEngineWorkerJob> builder)
         {
             base.Configure(builder);
 

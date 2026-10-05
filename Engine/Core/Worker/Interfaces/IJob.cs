@@ -1,7 +1,7 @@
 ﻿namespace RpgAdventureGame.Backend.Engine.Core.Worker.Interfaces
 {
-    internal interface IJob
+    public interface IJob
     {
-        Task ExecuteAsync(CancellationToken stoppingToken);
+        Task ExecuteAsync(IJobContext context, CancellationToken stoppingToken);
     }
 }
