@@ -1,24 +1,50 @@
-﻿using RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob;
-using RpgAdventureGame.Backend.Engine.Core.Waiter.Base;
+﻿using RpgAdventureGame.Backend.Engine.Core.Waiter.Interface;
 
-namespace RpgAdventureGame.Backend.Engine.Core.Waiter
+namespace RpgAdventureGame.Backend.Engine.Core.Waiter;
+
+public class IntervalWaiter : IWaiter
 {
-    internal class IntervalWaiter : IWaiter
+    private readonly TimeProvider timeProvider;
+
+    private TimeSpan prevInterval;
+    private DateTime prevTickTimestamp;
+
+    private PeriodicTimer Timer { get; }
+
+    public TimeSpan Interval
     {
-        private PeriodicTimer Timer { get; } = new(TimeSpan.FromSeconds(1));
-
-        public DateTime NextTick { get; private set; } = DateTime.Now.Add(TimeSpan.FromSeconds(1));
-        public TimeSpan Delay => Timer.Period;
-
-        public async Task AwaitAsync(CancellationToken cancellationToken)
+        get => Timer.Period;
+        set
         {
-            await Timer.WaitForNextTickAsync(cancellationToken);
-            NextTick = DateTime.Now.Add(Timer.Period);
-        }
-
-        public void Update(DbEngineWorkerJob config)
-        {
-            Timer.Period = config.IdleInterval ?? throw new InvalidOperationException("Period value cannot be null");
+            GetLastTickDate();
+            prevInterval = Timer.Period;
+            Timer.Period = value;
         }
     }
+
+    public DateTime NextTick => GetLastTickDate().Add(prevInterval);
+
+    public TimeSpan Delay => NextTick - timeProvider.GetLocalNow();
+
+    public IntervalWaiter(TimeSpan interval, TimeProvider? timeProvider = null)
+    {
+        this.timeProvider = timeProvider ?? TimeProvider.System;
+
+        prevTickTimestamp = this.timeProvider.GetLocalNow().DateTime;
+
+        Timer = new(prevInterval = interval);
+    }
+
+    public async Task AwaitAsync(CancellationToken cancellationToken = default)
+        => await Timer.WaitForNextTickAsync(cancellationToken);
+
+    private DateTime GetLastTickDate()
+    {
+        var incrUntil = timeProvider.GetLocalNow() - prevInterval;
+        while (prevTickTimestamp < incrUntil)
+            prevTickTimestamp += prevInterval;
+        return prevTickTimestamp;
+    }
+
+    public override string ToString() => ((IWaiter)this).Info;
 }

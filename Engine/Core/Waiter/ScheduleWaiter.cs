@@ -1,34 +1,19 @@
 ﻿using NCrontab;
-using RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob;
-using RpgAdventureGame.Backend.Engine.Core.Waiter.Base;
+using RpgAdventureGame.Backend.Engine.Core.Waiter.Interface;
 
-namespace RpgAdventureGame.Backend.Engine.Core.Waiter
+namespace RpgAdventureGame.Backend.Engine.Core.Waiter;
+
+public class ScheduleWaiter(CrontabSchedule cron, TimeProvider? timeProvider = null) : IWaiter
 {
-    internal class ScheduleWaiter : IWaiter
-    {
-        private CrontabSchedule Cron { get; set; } = CrontabSchedule.Parse("* * * * * *", new() { IncludingSeconds = true });
+    private readonly TimeProvider timeProvider = timeProvider ?? TimeProvider.System;
 
-        public DateTime NextTick { get; private set; } = DateTime.Now.AddSeconds(1);
-        public TimeSpan Delay { get; private set; } = TimeSpan.FromSeconds(1);
+    public CrontabSchedule Cron { get; set; } = cron;
 
-        public async Task AwaitAsync(CancellationToken cancellationToken)
-        {
-            Delay = NextTick - DateTime.Now;
-            if (Delay <= TimeSpan.Zero) Delay = TimeSpan.FromMilliseconds(100);
+    public DateTime NextTick => Cron.GetNextOccurrence(timeProvider.GetLocalNow().DateTime);
+    public TimeSpan Delay => NextTick - timeProvider.GetLocalNow();
 
-            await Task.Delay(Delay, cancellationToken);
-            NextTick = Cron.GetNextOccurrence(DateTime.Now);
-        }
+    public Task AwaitAsync(CancellationToken cancellationToken = default)
+        => Task.Delay(Delay, cancellationToken);
 
-        public void Update(DbEngineWorkerJob config)
-        {
-            if (config.CronExpression is null)
-                throw new InvalidOperationException("Cron expression cannot be null");
-
-            bool includeSeconds = config.CronExpression.Split(' ').Length > 5;
-
-            Cron = CrontabSchedule.TryParse(config.CronExpression, new() { IncludingSeconds = includeSeconds })
-                ?? throw new InvalidOperationException("Invalid cron expression");
-        }
-    }
+    public override string ToString() => ((IWaiter)this).Info;
 }

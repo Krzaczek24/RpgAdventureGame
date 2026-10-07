@@ -4,21 +4,21 @@ using Microsoft.Extensions.Hosting;
 using RpgAdventureGame.Backend.Common;
 using RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob;
 using RpgAdventureGame.Backend.Engine.Core.Job;
-using RpgAdventureGame.Backend.Engine.Core.Waiter;
-using RpgAdventureGame.Backend.Engine.Core.Waiter.Base;
+using RpgAdventureGame.Backend.Engine.Core.Waiter.Interface;
 
 namespace RpgAdventureGame.Backend.Engine.Core.Worker.Base
 {
     internal abstract class EngineWorker<TJob, TWaiter>(
         ILogger logger,
         IMemoryCache cache,
-        IServiceScopeFactory scopeFactory) : BackgroundService
+        IServiceScopeFactory scopeFactory,
+        TWaiter waiter) : BackgroundService
         where TJob : IJob
-        where TWaiter : IWaiter, new()
+        where TWaiter : IWaiter
     {
         private readonly static Lazy<bool> isAlreadyAssigned = new(() => true);
         protected static string JobName { get; } = typeof(TJob).Name;
-        private static string WaiterTypeName { get; } = typeof(TWaiter).Name;
+        protected static string WaiterTypeName { get; } = typeof(TWaiter).Name;
 
         protected ILogger Logger { get; } = logger;
         protected IMemoryCache Cache { get; } = cache;
@@ -37,11 +37,10 @@ namespace RpgAdventureGame.Backend.Engine.Core.Worker.Base
             {
                 var config = await LoadConfigAsync(stoppingToken) ?? throw new InvalidOperationException($"'{JobName}' configuration has been not found, worker abandons job");
 
-                var waiter = new TWaiter();
-                waiter.Update(config);
+                UpdateWaiterTick(waiter, config);
                 await waiter.AwaitAsync(stoppingToken);
 
-                Logger.Info($"Next '{JobName}' execution scheduled for: {waiter.NextTick:yyyy-MM-dd HH:mm} (in {waiter.Delay})");
+                Logger.Info($"Worker's next '{JobName}' execution scheduled for: {waiter.NextTick:yyyy-MM-dd HH:mm} (in {waiter.Delay})");
 
                 using (var scope = scopeFactory.CreateAsyncScope())
                 {
@@ -54,7 +53,8 @@ namespace RpgAdventureGame.Backend.Engine.Core.Worker.Base
 
                 while (true)
                 {
-                    config = await LoadConfigAsync(stoppingToken) ?? throw new InvalidOperationException($"'{JobName}' configuration has been not found, worker abandons job");
+                    config = await LoadConfigAsync(stoppingToken);
+                    UpdateWaiterTick(waiter, config);
 
                     if (config.Active)
                     {
@@ -87,16 +87,12 @@ namespace RpgAdventureGame.Backend.Engine.Core.Worker.Base
             }
         }
 
-        private JobContext CreateContext() => new()
+        protected abstract void UpdateWaiterTick(TWaiter waiter, DbEngineWorkerJob config);
+
+        protected virtual JobContext CreateContext() => new()
         {
             JobName = JobName,
             InstanceId = Guid.NewGuid().ToString(),
-            WorkerType = WaiterTypeName switch
-            {
-                nameof(IntervalWaiter) => WorkerType.Continuous,
-                nameof(ScheduleWaiter) => WorkerType.Schedule,
-                _ => throw new InvalidOperationException($"Unknown waiter '{WaiterTypeName}'"),
-            }
         };
 
         private async Task ExecuteJobAsync(CancellationToken stoppingToken)

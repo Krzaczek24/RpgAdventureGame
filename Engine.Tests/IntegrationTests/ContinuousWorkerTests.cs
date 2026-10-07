@@ -6,7 +6,7 @@ namespace RpgAdventureGame.Backend.Engine.Tests.IntegrationTests
 {
     internal class ContinuousWorkerTests : IntegrationTestBase
     {
-        protected override Task AddEntities(List<DbTable> entities)
+        protected override async Task AddEntities(List<DbTable> entities)
         {
             entities.Add(new DbEngineWorkerJob
             {
