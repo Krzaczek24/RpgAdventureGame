@@ -1,6 +1,6 @@
 ﻿using RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob;
 
-namespace RpgAdventureGame.Backend.Engine.Core
+namespace RpgAdventureGame.Backend.Engine.Core.Job
 {
     public interface IJobContext
     {
@@ -10,11 +10,12 @@ namespace RpgAdventureGame.Backend.Engine.Core
         WorkerType WorkerType { get; }
     }
 
-    internal class JobContext : IJobContext
+    internal record class JobContext : IJobContext
     {
         public required string JobName { get; init; }
         public required string InstanceId { get; init; }
         public bool DoNextJob { get; set; }
-        public required WorkerType WorkerType { get; init; }
+        public WorkerType WorkerType { get; init; }
+        public ulong Iteration { get; internal set; }
     }
 }

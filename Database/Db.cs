@@ -2,6 +2,7 @@
 using RpgAdventureGame.Backend.Database.SQLite.Entities.Area;
 using RpgAdventureGame.Backend.Database.SQLite.Entities.Character;
 using RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob;
+using RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJobEvent;
 using RpgAdventureGame.Backend.Database.SQLite.Entities.Path;
 using RpgAdventureGame.Backend.Database.SQLite.Entities.Travel;
 
@@ -13,7 +14,8 @@ namespace RpgAdventureGame.Backend.Database.SQLite
         internal virtual DbSet<DbCharacter> Characters { get; set; }
         internal virtual DbSet<DbPath> Paths { get; set; }
         internal virtual DbSet<DbTravel> Travels { get; set; }
-        internal virtual DbSet<DbEngineWorkerJob> Workers { get; set; }
+        internal virtual DbSet<DbEngineWorkerJob> Jobs { get; set; }
+        internal virtual DbSet<DbEngineWorkerJobEvent> JobEvents { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

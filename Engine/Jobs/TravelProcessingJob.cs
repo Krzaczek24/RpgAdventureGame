@@ -1,5 +1,4 @@
-﻿using RpgAdventureGame.Backend.Engine.Core;
-using RpgAdventureGame.Backend.Engine.Core.Worker.Interfaces;
+﻿using RpgAdventureGame.Backend.Engine.Core.Job;
 
 namespace RpgAdventureGame.Backend.Engine.Jobs
 {

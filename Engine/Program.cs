@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using RpgAdventureGame.Backend.Common;
-using RpgAdventureGame.Backend.Engine.Core.Worker.Implementations;
+using RpgAdventureGame.Backend.Engine.Core.Worker;
 using RpgAdventureGame.Backend.Engine.Jobs;
 using RpgAdventureGame.Database.SQLite;
 

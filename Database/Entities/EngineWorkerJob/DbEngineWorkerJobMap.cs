@@ -14,6 +14,10 @@ namespace RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob
                 .HasColumnName("Name")
                 .IsRequired();
 
+            builder.Property(x => x.Type)
+                .HasColumnName("Type")
+                .IsRequired();
+
             builder.Property(x => x.Active)
                 .HasColumnName("Active")
                 .IsRequired();
@@ -34,6 +38,14 @@ namespace RpgAdventureGame.Backend.Database.SQLite.Entities.EngineWorkerJob
             builder.Property(x => x.CronExpression)
                 .HasColumnName("CronExpression")
                 .IsRequired();
+
+            builder.Property(x => x.BatchSize)
+                .HasColumnName("BatchSize")
+                .IsRequired();
+
+            builder.HasMany(x => x.Events)
+                .WithOne(x => x.Job)
+                .HasForeignKey(c => c.JobId);
         }
     }
 }
